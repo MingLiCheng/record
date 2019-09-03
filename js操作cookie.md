@@ -10,7 +10,8 @@ setCookie(name, value, expiredays) {
 	var exdate = new Date();
 	exdate.setDate(exdate.getDate() + expiredays);
 	var value = Base64.encode(value)
-	document.cookie = name + "=" + escape(value) +((expiredays == null) ? "" : ";path=/;expires=" + exdate.toGMTStrin()
+	document.cookie = name + "=" + escape(value) +
+        ((expiredays == null) ? "" : ";path=/;expires=" + exdate.toGMTStrin())
 },
 // 获取 Cookie的信息
 getCookie(name, base64) {
