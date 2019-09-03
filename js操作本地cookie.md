@@ -13,7 +13,7 @@ Cookie是一段文本信息，伴随着用户请求在web和server之间进行�
 			document.cookie = name + "=" + escape(value) +
 				((expiredays == null) ? "" : ";path=/;expires=" + exdate.toGMTString())
 		},
-        // 获取 Cookie的信息    
+               // 获取 Cookie的信息    
 		getCookie(name, base64) {
 			var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 			if (arr = document.cookie.match(reg)) {
@@ -24,7 +24,7 @@ Cookie是一段文本信息，伴随着用户请求在web和server之间进行�
 			} else
 				return null;
 		},
-        // 删除 Cookie的信息
+               // 删除 Cookie的信息
 		delCookie(name) {
 			var exp = new Date();
 			exp.setTime(exp.getTime() - 1);
