@@ -122,20 +122,20 @@ toolbar: {
 //  图片上传事件
 onInputChange(file,index) {
     if (file[0].type.indexOf('image/') == -1) {
-        fly.alert({
+        alert({
             content: '请选择图片文件',
             type: 'warning'
         })
         return false;
     } else if (!(file[0].type === 'image/jpeg' || file[0].type === 'image/png')) {
-        fly.alert({
+        alert({
             content: '请选择jpg/png格式的图片',
             type: 'warning'
         })
         return false;
     } else if (file[0].size > 5120 * 1024) {
         // this.$message.error('所选文件需小于5m');
-        fly.alert({
+       alert({
             content: '所选文件需小于5m',
             type: 'warning'
         })
@@ -168,7 +168,7 @@ onInputChange(file,index) {
         error: function (err) {
             // 结束loading
             vm.set('isImageLoading', false)
-            fly.alert({
+            alert({
                 content:`文件上传失败，网络错误`,
                 type:'danger'
             })

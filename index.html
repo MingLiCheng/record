@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script> -->
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script> -->
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script> -->
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script> -->
+  <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script> -->
+  <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script> -->
+  <script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+
+    //  这是你房子的数据  暂时设置 最后一个 1 为已完成  0 为在建
+    var data = [{
+        x: 0,
+        y: 0,
+        name: 'C1', // 楼房名字
+        storey: 6, // 楼层
+        state: 0, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 0,
+        y: 1,
+        name: 'C2', // 楼房名字
+        storey: 6, // 楼层
+        state: 1, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 0,
+        y: 2,
+        name: 'C3', // 楼房名字
+        storey: 26, // 楼层
+        state: 0, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 1,
+        y: 0,
+        name: 'C4', // 楼房名字
+        storey: 8, // 楼层
+        state: 1, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 1,
+        y: 1,
+        name: 'C5', // 楼房名字
+        storey: 16, // 楼层
+        state: 0, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 1,
+        y: 2,
+        name: 'C6', // 楼房名字
+        storey: 14, // 楼层
+        state: 1, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 2,
+        y: 0,
+        name: 'C7', // 楼房名字
+        storey: 6, // 楼层
+        state: 1, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 2,
+        y: 1,
+        name: 'C8', // 楼房名字
+        storey: 18, // 楼层
+        state: 1, // 建设状态  0： 在建， 1: 已完成
+      },
+      {
+        x: 2,
+        y: 2,
+        name: 'C9', // 楼房名字
+        storey: 6, // 楼层
+        state: 0, // 建设状态  0： 在建， 1: 已完成
+      },
+    ]
+
+    var hours = ['1a', '2a', '3a'];
+    var days = ['Saturday', 'Friday', 'Thursday'];
+
+
+    option = {
+      tooltip: {
+        trigger: "item",
+        show: true,
+        formatter: function (params) {
+          let data = params.data.data
+          let value = params.data.value
+          console.log('data', data)
+          console.log('value', value)
+          data.state = data.state === 1 ? '已完工' : '在建中'
+
+          return (
+            '<div>' +
+            "<p>当前楼栋号码：" + data.name + "</p>" +
+            "<p>横坐标：" + value[0] + "</p>" +
+            "<p>纵坐标：" + value[1] + "</p>" +
+            "<p>楼层数：" + value[2] + "</p>" +
+            "<p>施工状态：" + data.state + "</p>" +
+            "</div>"
+          );
+        }
+      },
+      // visualMap: {
+      //     // max: 20,
+      //     // inRange: {
+      //     //     color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+      //     // }
+      // },
+      xAxis3D: {
+        type: 'category',
+        data: hours
+      },
+      yAxis3D: {
+        type: 'category',
+        data: days
+      },
+      zAxis3D: {
+        type: 'value'
+      },
+      grid3D: {
+        boxWidth: 100,
+        boxDepth: 100,
+        viewControl: {
+          // projection: 'orthographic'
+        },
+        // light: {
+        //     main: {
+        //         intensity: 1.2,
+        //         shadow: true
+        //     },
+        //     ambient: {
+        //         intensity: 0.3
+        //     }
+        // }
+      },
+      series: [{
+        type: 'bar3D',
+        data: data.map(function (item) {
+          return {
+            value: [item.x, item.y, item.storey],
+            data: {
+              name: item.name,
+              state: item.state
+            }
+          }
+        }),
+        shading: 'lambert',
+
+        label: {
+          textStyle: {
+            fontSize: 16,
+            borderWidth: 1
+          }
+        },
+        itemStyle: {
+          //通常情况下：
+          normal: {
+            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+            color: function (params) {
+              console.log('params', params)
+              let data = params.data.data
+              if (data.state === 1) return '#66e766' // 建设完成
+              return '#4d4df1' // 在建
+            }
+          },
+          //鼠标悬停时：
+          emphasis: {
+            label: {
+              textStyle: {
+                fontSize: 20,
+                color: '#900'
+              }
+            },
+            itemStyle: {
+              color: '#900'
+            }
+          }
+        },
+
+
+      }]
+    };
+    if (option && typeof option === "object") {
+      myChart.setOption(option, true);
+    }
+  </script>
+</body>
+
+</html>
